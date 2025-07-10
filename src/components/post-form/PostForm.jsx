@@ -63,12 +63,15 @@ export default function PostForm({ post }) {
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === "title") {
-                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+                const newSlug = slugTransform(value.title);
+                setValue("slug", newSlug, { shouldValidate: true });
             }
+          
         });
 
         return () => subscription.unsubscribe();
     }, [watch, slugTransform, setValue]);
+
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
