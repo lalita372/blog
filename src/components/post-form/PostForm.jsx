@@ -63,8 +63,8 @@ export default function PostForm({ post }) {
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === "title") {
-                const newSlug = slugTransform(value.title);
-                setValue("slug", newSlug, { shouldValidate: true });
+                
+                setValue("slug", slugTransform(value.title), { shouldValidate: true });
             }
           
         });
