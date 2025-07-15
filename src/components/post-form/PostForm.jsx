@@ -18,6 +18,8 @@ export default function PostForm({ post }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
 
+
+
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
@@ -36,7 +38,6 @@ export default function PostForm({ post }) {
             }
         } else {
             const file = await appwriteService.uploadFile(data.image[0]);
-
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
@@ -63,12 +64,15 @@ export default function PostForm({ post }) {
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === "title") {
+                
                 setValue("slug", slugTransform(value.title), { shouldValidate: true });
             }
+          
         });
 
         return () => subscription.unsubscribe();
     }, [watch, slugTransform, setValue]);
+
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -101,7 +105,7 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={appwriteService.getFileView(post.featuredImage)}
                             alt={post.title}
                             className="rounded-lg"
                         />
